@@ -666,6 +666,13 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 {ANON}                   return 'ANON'
 <<EOF>>                  return 'EOF'
 .                        return 'INVALID'
+"PATHS"                  return 'PATHS'
+"START"                  return 'START'
+"END"                    return 'END'
+"VIA"                    return 'VIA'
+"MAXLENGTH"              return 'MAXLENGTH'
+"SHORTEST"               return 'SHORTEST'
+"CYCLIC"                 return 'CYCLIC'
 
 /lex
 
