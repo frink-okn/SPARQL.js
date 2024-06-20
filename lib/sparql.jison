@@ -683,7 +683,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 %%
 
 QueryOrUpdate
-    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path ) EOF
+    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path | PathsQuery) EOF
     {
       // Set parser options
       $2 = $2 || {};
