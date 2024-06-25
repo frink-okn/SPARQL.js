@@ -666,6 +666,13 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 {ANON}                   return 'ANON'
 <<EOF>>                  return 'EOF'
 .                        return 'INVALID'
+"PATHS"                  return 'PATHS'
+"START"                  return 'START'
+"END"                    return 'END'
+"VIA"                    return 'VIA'
+"MAXLENGTH"              return 'MAXLENGTH'
+"SHORTEST"               return 'SHORTEST'
+"CYCLIC"                 return 'CYCLIC'
 
 /lex
 
@@ -676,7 +683,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 %%
 
 QueryOrUpdate
-    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path ) EOF
+    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path | PathsQuery) EOF
     {
       // Set parser options
       $2 = $2 || {};
@@ -728,7 +735,79 @@ QueryOrUpdate
       return $2;
     }
     ;
+PathsQuery
+    : 'PATHS' PathProperties LimitOffsetClauses?
+    {
+      // Construct the query object for PATHS
+      let pathsQuery = {
+        queryType: 'PATHS',
+        type : 'query',
+        shortest : 'false',
+        cyclic : 'false'
+      };
+      $2.forEach(prop => pathsQuery[prop.property] = prop.value);
+      if ($3)
+      {
+        if ($3.limit) pathsQuery.limit = $3.limit;
+        if ($3.offset) pathsQuery.offset = $3.offset;
+      }
+      $$ = pathsQuery;
+    }
+    ;
 
+
+PathProperties
+    : PathProperty PathProperties
+    {
+      $$ = [$1].concat($2);
+    }
+    | PathProperty
+    {
+      $$ = [$1];
+    }
+    ;
+
+PathProperty
+    : 'START' '=' VarOrIri
+    {
+      $$ = { property: 'start', value: $3 };
+    }
+    | 'END' '=' VarOrIri
+    {
+      $$ = { property: 'end', value: $3 };
+    }
+    | 'VIA' '=' VarorIriOrListOfIris
+    {
+      $$ = { property: 'via', value: $3 };
+    }
+    | 'MAXLENGTH' '=' INTEGER
+    {
+      $$ = { property: 'MAXLENGTH', value: $3 };
+    }
+    | 'SHORTEST'
+    {
+      $$ = { property: 'shortest', value: true };
+    }
+    | 'CYCLIC'
+    {
+      $$ = { property: 'cyclic', value: true };
+    }
+    ;
+
+
+VarorIriOrListOfIris
+    : Var
+    | iri
+    | ListOfIris
+    
+    ;
+
+ListOfIris
+    : '[' iri (',' iri)* ']'
+    {
+      $$ = [$2].concat($3.map(pair => pair[1]));
+    }
+    ;
 // [2]
 Query
     : Qry ValuesClause? -> { ...$1, ...$2, type: 'query' }
