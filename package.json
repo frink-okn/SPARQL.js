@@ -1,8 +1,14 @@
 {
-  "name": "sparqljs",
-  "version": "3.7.1",
-  "description": "A parser for the SPARQL query language",
-  "author": "Ruben Verborgh <ruben.verborgh@gmail.com>",
+  "name": "sparqljs-nrt",
+  "version": "1.0.8",
+  "description": "A parser for the SPARQL query language with custom keywords",
+  "author": "Kaushik Pillalamarii <psvkaushik@gmail.com>",
+  "contributors": [
+    {
+      "name": "Keiji Numata",
+      "email": "knumata5127@gmail.com"
+    }
+  ],
   "keywords": [
     "sparql",
     "rdf",
@@ -12,16 +18,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RubenVerborgh/SPARQL.js.git"
+    "url": "git+https://github.com/frink-okn/SPARQL.js.git"
   },
   "bugs": {
-    "url": "https://github.com/RubenVerborgh/SPARQL.js/issues"
+    "url": "https://github.com/frink-okn/SPARQL.js/issues"
   },
   "main": "sparql.js",
-  "bin": "bin/sparql-to-json",
+  "bin": {
+    "sparqljs": "bin/sparql-to-json"
+  },
   "files": [
     "sparql.js",
     "lib/*.js",
+    "index.d.ts",
     "bin/*"
   ],
   "scripts": {
@@ -34,13 +43,15 @@
     "spec-earl-query": "npm run spec-base-query --silent -- -o earl -p spec/earl-meta.json > spec/earl-query.ttl",
     "spec-earl-update": "npm run spec-base-update --silent -- -o earl -p spec/earl-meta.json > spec/earl-update.ttl",
     "spec-earl-star": "npm run spec-star --silent -- -o earl -p spec/earl-meta.json > spec/earl-star.ttl",
-    "spec": "npm run spec-base-query && npm run spec-base-update && npm run spec-star"
+    "spec": "npm run spec-base-query && npm run spec-base-update && npm run spec-star",
+    "tsc": "tsc"
   },
   "engines": {
     "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
   },
   "dependencies": {
-    "rdf-data-factory": "^1.1.2"
+    "rdf-data-factory": "^1.1.2",
+    "sparqljs-nrt": "^1.0.8"
   },
   "devDependencies": {
     "expect": "^24.9.0",
@@ -57,5 +68,11 @@
   "pre-commit": [
     "build",
     "test"
-  ]
+  ],
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "homepage": "https://github.com/frink-okn/SPARQL.js#readme",
+  "types": "index.d.ts"
 }

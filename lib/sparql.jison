@@ -462,6 +462,7 @@
     }
     return operations;
   }
+  module.exports = parser;
 %}
 
 %lex
@@ -776,7 +777,7 @@ PathProperty
     {
       $$ = { property: 'end', value: $3 };
     }
-    | 'VIA' '=' VarorIriOrListOfIris
+    | 'VIA' '=' VarOrIri
     {
       $$ = { property: 'via', value: $3 };
     }
