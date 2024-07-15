@@ -22,6 +22,7 @@ WHERE {
     card:i foaf:knows ?known .
     ?known foaf:homepage ?homepage .
 }`*/
+console.log(sparqlQuery)
 
 parser = sparqlModule.Parser()
 

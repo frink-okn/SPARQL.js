@@ -769,15 +769,15 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' '=' VarOrIri
+    : 'START' '=' iri
     {
       $$ = { property: 'start', value: $3 };
     }
-    | 'END' '=' VarOrIri
+    | 'END' '=' iri
     {
       $$ = { property: 'end', value: $3 };
     }
-    | 'VIA' '=' VarOrIri
+    | 'VIA' '=' iri
     {
       $$ = { property: 'via', value: $3 };
     }

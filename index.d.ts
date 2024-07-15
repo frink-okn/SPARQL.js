@@ -5,7 +5,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.1
 
-import * as RdfJs from 'rdf-js';
+import * as RdfJs from '@rdfjs/types';
 
 export const Parser: {
     new (options?: ParserOptions): SparqlParser;
@@ -83,9 +83,9 @@ export interface SelectQuery extends BaseQuery {
 
 export interface PathsQuery extends BaseQuery {
     queryType: "PATHS";
-    start?: Variable | IriTerm;
-    via?: Variable | IriTerm ;
-    end?: Variable | IriTerm;
+    start: IriTerm ;
+    via: IriTerm ;
+    end: IriTerm ;
     maxlength?: number| undefined;
     shortest?: boolean | undefined;
     limit?: number | undefined;

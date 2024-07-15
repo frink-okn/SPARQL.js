@@ -1,6 +1,6 @@
 {
   "name": "sparqljs-nrt",
-  "version": "1.0.8",
+  "version": "1.1.3",
   "description": "A parser for the SPARQL query language with custom keywords",
   "author": "Kaushik Pillalamarii <psvkaushik@gmail.com>",
   "contributors": [
