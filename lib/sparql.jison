@@ -779,9 +779,9 @@ PathProperty
     {
       $$ = { property: 'end',  value: { var: $2, value: $4 } };
     }
-    | 'VIA'  Var '=' PathViaValue 
+    | 'VIA' '=' PathViaValue 
     {
-      $$ = { property: 'via',  value: { var: $2, value: $4 } };
+      $$ = { property: 'via',  value: { var: $2, value: $3 } };
     }
     | 'MAXLENGTH' '=' INTEGER
     {
@@ -811,9 +811,9 @@ PathStartValue
     }
     ;
 PathViaValue
-    : iri
+    : VarOrIri
     {
-      $$ = { type: 'iri', value: $1 };
+      $$ = { type: $1.termType, value: $1 };
     }
     | WhereClause
     {
