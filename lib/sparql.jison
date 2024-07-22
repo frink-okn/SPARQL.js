@@ -671,6 +671,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 "START"                  return 'START'
 "END"                    return 'END'
 "VIA"                    return 'VIA'
+"ALL"                    return 'ALL'
 "MAXLENGTH"              return 'MAXLENGTH'
 "SHORTEST"               return 'SHORTEST'
 "CYCLIC"                 return 'CYCLIC'
@@ -744,6 +745,7 @@ PathsQuery
         queryType: 'PATHS',
         type : 'query',
         shortest : 'false',
+        all : 'false',
         cyclic : 'false'
       };
       $2.forEach(prop => pathsQuery[prop.property] = prop.value);
@@ -769,17 +771,17 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' '=' iri
+    : 'START' Var '=' PathStartValue 
     {
-      $$ = { property: 'start', value: $3 };
+      $$ = { property: 'start', value: { var: $2, value: $4 } };
     }
-    | 'END' '=' iri
+    | 'END'  Var '=' PathEndValue 
     {
-      $$ = { property: 'end', value: $3 };
+      $$ = { property: 'end',  value: { var: $2, value: $4 } };
     }
-    | 'VIA' '=' iri
+    | 'VIA'  Var '=' PathViaValue 
     {
-      $$ = { property: 'via', value: $3 };
+      $$ = { property: 'via',  value: { var: $2, value: $4 } };
     }
     | 'MAXLENGTH' '=' INTEGER
     {
@@ -789,9 +791,43 @@ PathProperty
     {
       $$ = { property: 'shortest', value: true };
     }
+    | 'ALL'
+    {
+      $$ = { property: 'all', value: true };
+    }
     | 'CYCLIC'
     {
       $$ = { property: 'cyclic', value: true };
+    }
+    ;
+PathStartValue
+    : iri
+    {
+      $$ = { type: 'iri', value: $1 };
+    }
+    | WhereClause
+    {
+      $$ = { type: 'pattern', value: $1.where };
+    }
+    ;
+PathViaValue
+    : iri
+    {
+      $$ = { type: 'iri', value: $1 };
+    }
+    | WhereClause
+    {
+      $$ = { type: 'pattern', value: $1.where };
+    }
+    ;
+PathEndValue
+    : iri
+    {
+      $$ = { type: 'iri', value: $1 };
+    }
+    | WhereClause
+    {
+      $$ = { type: 'pattern', value: $1.where };
     }
     ;
 
