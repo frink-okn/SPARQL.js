@@ -83,14 +83,24 @@ export interface SelectQuery extends BaseQuery {
 
 export interface PathsQuery extends BaseQuery {
     queryType: "PATHS";
-    start: IriTerm ;
-    via: IriTerm ;
-    end: IriTerm ;
+    start: PathValue;
+    via: PathViaValue;
+    end: PathValue;
+    all?: boolean|undefined;
     maxlength?: number| undefined;
     shortest?: boolean | undefined;
     limit?: number | undefined;
     offset?: number | undefined;
     cyclic?: boolean | undefined;
+}
+export interface PathValue {
+    var: Var;
+    value: IriTerm | GraphPattern;
+}
+
+export interface PathViaValue {
+    var: Var | null;
+    value: IriTerm | Var | GraphPattern;
 }
 
 export interface Grouping {
