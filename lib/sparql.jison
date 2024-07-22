@@ -740,7 +740,7 @@ PathsQuery
     : 'PATHS' PathProperties LimitOffsetClauses?
     {
       // Construct the query object for PATHS
-      let pathsQuery = {
+      const pathsQuery = {
         queryType: 'PATHS',
         type : 'query',
         shortest : 'false',
@@ -796,19 +796,6 @@ PathProperty
     ;
 
 
-VarorIriOrListOfIris
-    : Var
-    | iri
-    | ListOfIris
-    
-    ;
-
-ListOfIris
-    : '[' iri (',' iri)* ']'
-    {
-      $$ = [$2].concat($3.map(pair => pair[1]));
-    }
-    ;
 // [2]
 Query
     : Qry ValuesClause? -> { ...$1, ...$2, type: 'query' }

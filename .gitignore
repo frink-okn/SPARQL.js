@@ -4,3 +4,6 @@ lib/SparqlParser.js
 .rdf-test-suite-cache
 package.json
 package-lock.json
+queries/paths/*
+main.js
+test/parsedQueries/paths/*
