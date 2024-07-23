@@ -771,7 +771,7 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' Var '=' PathValue 
+    : 'START' Var '='? PathValue 
     {
       if ($4) {
         $$ = { property: 'start', value: { var: $2, value: $4 } };
@@ -779,7 +779,7 @@ PathProperty
         $$ = { property: 'start', value: { var: $2, value: null } };
       }
     }
-    | 'END'  Var '=' PathValue 
+    | 'END'  Var '='? PathValue 
     {
       if ($4) {
         $$ = { property: 'end', value: { var: $2, value: $4 } };
@@ -787,9 +787,13 @@ PathProperty
         $$ = { property: 'end', value: { var: $2, value: null } };
       }
     }
-    | 'VIA' '=' PathViaValue 
+    | 'VIA' '='? PathViaValue 
     {
-      $$ = { property: 'via',  value: { var: $2, value: $3 } };
+      if ($3) {
+        $$ = { property: 'via', value: { var: $2, value: $3 } };
+      } else {
+        $$ = { property: 'via', value: { var: $2, value: null } };
+      }
     }
     | 'MAXLENGTH' '=' INTEGER
     {
