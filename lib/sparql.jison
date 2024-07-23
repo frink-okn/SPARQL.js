@@ -771,13 +771,21 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' Var '=' PathStartValue 
+    : 'START' Var '=' PathValue 
     {
-      $$ = { property: 'start', value: { var: $2, value: $4 } };
+      if ($4) {
+        $$ = { property: 'start', value: { var: $2, value: $4 } };
+      } else {
+        $$ = { property: 'start', value: { var: $2, value: null } };
+      }
     }
-    | 'END'  Var '=' PathEndValue 
+    | 'END'  Var '=' PathValue 
     {
-      $$ = { property: 'end',  value: { var: $2, value: $4 } };
+      if ($4) {
+        $$ = { property: 'end', value: { var: $2, value: $4 } };
+      } else {
+        $$ = { property: 'end', value: { var: $2, value: null } };
+      }
     }
     | 'VIA' '=' PathViaValue 
     {
@@ -800,7 +808,7 @@ PathProperty
       $$ = { property: 'cyclic', value: true };
     }
     ;
-PathStartValue
+PathValue
     : iri
     {
       $$ = { type: 'iri', value: $1 };
@@ -808,6 +816,10 @@ PathStartValue
     | WhereClause
     {
       $$ = { type: 'pattern', value: $1.where };
+    }
+    |
+    {
+      $$ = null;
     }
     ;
 PathViaValue
@@ -819,15 +831,9 @@ PathViaValue
     {
       $$ = { type: 'pattern', value: $1.where };
     }
-    ;
-PathEndValue
-    : iri
+    |
     {
-      $$ = { type: 'iri', value: $1 };
-    }
-    | WhereClause
-    {
-      $$ = { type: 'pattern', value: $1.where };
+      $$ = null;
     }
     ;
 

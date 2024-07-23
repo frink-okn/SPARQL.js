@@ -95,12 +95,12 @@ export interface PathsQuery extends BaseQuery {
 }
 export interface PathValue {
     var: Var;
-    value: IriTerm | GraphPattern;
+    value?: IriTerm | Pattern[] | null;
 }
 
 export interface PathViaValue {
     var: Var | null;
-    value: IriTerm | Var | GraphPattern;
+    value?: IriTerm | Var | Pattern[] | null;
 }
 
 export interface Grouping {
