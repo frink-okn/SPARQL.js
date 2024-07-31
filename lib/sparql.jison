@@ -787,10 +787,10 @@ PathProperty
         $$ = { property: 'end', value: { var: $2, value: null } };
       }
     }
-    | 'VIA' '='? PathViaValue 
+    | 'VIA' Var '='? PathViaValue 
     {
-      if ($3) {
-        $$ = { property: 'via', value: { var: $2, value: $3 } };
+      if ($4) {
+        $$ = { property: 'via', value: { var: $2, value: $4 } };
       } else {
         $$ = { property: 'via', value: { var: $2, value: null } };
       }
@@ -821,15 +821,12 @@ PathValue
     {
       $$ = { type: 'pattern', value: $1.where };
     }
-    |
-    {
-      $$ = null;
-    }
+ 
     ;
 PathViaValue
-    : VarOrIri
+    : iri
     {
-      $$ = { type: $1.termType, value: $1 };
+      $$ = { type: 'iri', value: $1 };
     }
     | WhereClause
     {
