@@ -94,13 +94,19 @@ export interface PathsQuery extends BaseQuery {
     cyclic?: boolean | undefined;
 }
 export interface PathValue {
-    var: Var;
-    value?: IriTerm | Pattern[] | null;
+    var:{
+        type: Variable,
+        value : string
+    },
+    value: IriTerm | Pattern[];
 }
 
 export interface PathViaValue {
-    var: Var | null;
-    value?: IriTerm | Var | Pattern[] | null;
+    var: {
+        type: Variable,
+        value : string
+    },
+    value?: IriTerm | Pattern[] | null;
 }
 
 export interface Grouping {
