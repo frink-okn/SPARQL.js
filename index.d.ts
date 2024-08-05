@@ -98,7 +98,7 @@ export interface PathValue {
         type: Variable,
         value : string
     },
-    value: IriTerm | Pattern[];
+    value?: IriTerm | Pattern[];
 }
 
 export interface PathViaValue {
