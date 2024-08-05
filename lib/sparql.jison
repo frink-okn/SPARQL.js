@@ -671,6 +671,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 "START"                  return 'START'
 "END"                    return 'END'
 "VIA"                    return 'VIA'
+"ALL"                    return 'ALL'
 "MAXLENGTH"              return 'MAXLENGTH'
 "SHORTEST"               return 'SHORTEST'
 "CYCLIC"                 return 'CYCLIC'
@@ -744,6 +745,7 @@ PathsQuery
         queryType: 'PATHS',
         type : 'query',
         shortest : 'false',
+        all : 'false',
         cyclic : 'false'
       };
       $2.forEach(prop => pathsQuery[prop.property] = prop.value);
@@ -769,17 +771,29 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' '=' iri
+    : 'START' Var '='? PathValue 
     {
-      $$ = { property: 'start', value: $3 };
+      if ($4) {
+        $$ = { property: 'start', value: { var: $2, value: $4 } };
+      } else {
+        $$ = { property: 'start', value: { var: $2, value: null } };
+      }
     }
-    | 'END' '=' iri
+    | 'END'  Var '='? PathValue 
     {
-      $$ = { property: 'end', value: $3 };
+      if ($4) {
+        $$ = { property: 'end', value: { var: $2, value: $4 } };
+      } else {
+        $$ = { property: 'end', value: { var: $2, value: null } };
+      }
     }
-    | 'VIA' '=' iri
+    | 'VIA' Var '='? PathViaValue 
     {
-      $$ = { property: 'via', value: $3 };
+      if ($4) {
+        $$ = { property: 'via', value: { var: $2, value: $4 } };
+      } else {
+        $$ = { property: 'via', value: { var: $2, value: null } };
+      }
     }
     | 'MAXLENGTH' '=' INTEGER
     {
@@ -789,9 +803,38 @@ PathProperty
     {
       $$ = { property: 'shortest', value: true };
     }
+    | 'ALL'
+    {
+      $$ = { property: 'all', value: true };
+    }
     | 'CYCLIC'
     {
       $$ = { property: 'cyclic', value: true };
+    }
+    ;
+PathValue
+    : iri
+    {
+      $$ = { type: 'iri', value: $1 };
+    }
+    | WhereClause
+    {
+      $$ = { type: 'pattern', value: $1.where };
+    }
+ 
+    ;
+PathViaValue
+    : iri
+    {
+      $$ = { type: 'iri', value: $1 };
+    }
+    | WhereClause
+    {
+      $$ = { type: 'pattern', value: $1.where };
+    }
+    |
+    {
+      $$ = null;
     }
     ;
 
