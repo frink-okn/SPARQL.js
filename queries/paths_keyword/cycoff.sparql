@@ -1,0 +1,7 @@
+PREFIX ex: <http://example.org/>
+
+PATHS CYCLIC
+START ?s = ex:Node1
+END ?e = ex:Node2
+VIA ?v 
+OFFSET 10

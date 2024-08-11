@@ -1,0 +1,52 @@
+{
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": "false",
+  "all": "false",
+  "cyclic": "false",
+  "start": {
+    "var": {
+      "termType": "Variable",
+      "value": "s"
+    },
+    "value": {
+      "type": "iri",
+      "value": {
+        "termType": "NamedNode",
+        "value": {
+          "termType": "NamedNode",
+          "value": "http://example.org/start"
+        }
+      }
+    }
+  },
+  "end": {
+    "var": {
+      "termType": "Variable",
+      "value": "e"
+    },
+    "value": {
+      "type": "iri",
+      "value": {
+        "termType": "NamedNode",
+        "value": {
+          "termType": "NamedNode",
+          "value": "http://example.org/end"
+        }
+      }
+    }
+  },
+  "via": {
+    "value": {
+      "type": "iri",
+      "value": {
+        "termType": "NamedNode",
+        "value": {
+          "termType": "NamedNode",
+          "value": "http://example.org/via"
+        }
+      }
+    }
+  },
+  "prefixes": {}
+}
