@@ -799,7 +799,6 @@ PathProperty
           property: 'via',
           value: {
             var: { termType: 'Variable', value: $2.value }
-            // value: null // No PathViaValue was provided
           }
         };
       } else {
@@ -807,7 +806,6 @@ PathProperty
         $$ = {
           property: 'via',
           value: {
-            // var: null, // No Var was provided
             value: { type: $2.type, value: $2.value }
           }
         };
