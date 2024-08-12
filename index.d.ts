@@ -86,12 +86,13 @@ export interface PathsQuery extends BaseQuery {
     start: PathValue;
     via: PathVia;
     end: PathValue;
-    all?: boolean|undefined;
+    shortest: boolean;
+    all: boolean;
+    cyclic: boolean;    
     maxlength?: number| undefined;
-    shortest?: boolean | undefined;
     limit?: number | undefined;
     offset?: number | undefined;
-    cyclic?: boolean | undefined;
+    
 }
 export interface PathValue {
     var:{
