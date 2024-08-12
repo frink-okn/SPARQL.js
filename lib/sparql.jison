@@ -759,6 +759,7 @@ PathsQuery
     ;
 
 
+
 PathProperties
     : PathProperty PathProperties
     {
@@ -773,29 +774,44 @@ PathProperties
 PathProperty
     : 'START' Var '='? PathValue?
     {
-      if ($4) {
-        $$ = { property: 'start', value: { var: $2, value: $4 } };
-      } else {
-        $$ = { property: 'start', value: { var: $2, value: null } };
-      }
+        $$ = { property: 'start',
+        value: {
+          var: { termType: 'Variable', value: $2.value },
+          value: { type: $4.type, value: $4.value } 
+      } 
+        };
     }
     | 'END'  Var '='? PathValue?
     {
-      if ($4) {
-        $$ = { property: 'end', value: { var: $2, value: $4 } };
+        $$ = { property: 'end',
+        value: {
+          var: { termType: 'Variable', value: $2.value },
+          value: { type: $4.type, value: $4.value } 
+      } 
+        };
+    }
+    | 'VIA' (Var|PathViaValue)
+   {
+      // Check if the second part is a variable or a PathViaValue
+      if ($2.termType) {
+        // This means $2 is a Var
+        $$ = {
+          property: 'via',
+          value: {
+            var: { termType: 'Variable', value: $2.value }
+          }
+        };
       } else {
-        $$ = { property: 'end', value: { var: $2, value: null } };
+        // This means $2 is a PathViaValue
+        $$ = {
+          property: 'via',
+          value: {
+            value: { type: $2.type, value: $2.value }
+          }
+        };
       }
     }
-    | 'VIA' Var '='? PathViaValue
-    {
-      if ($4) {
-        $$ = { property: 'via', value: { var: $2, value: $4 } };
-      } else {
-        $$ = { property: 'via', value: { var: $2, value: null } };
-      }
-    }
-    | 'MAXLENGTH' '=' INTEGER
+    | 'MAXLENGTH' '='? INTEGER
     {
       $$ = { property: 'MAXLENGTH', value: $3 };
     }
@@ -815,7 +831,7 @@ PathProperty
 PathValue
     : iri
     {
-      $$ = { type: 'iri', value: $1 };
+      $$ = { type: 'iri', value:  { termType: 'NamedNode', value: $1 } };
     }
     | WhereClause
     {
@@ -826,7 +842,7 @@ PathValue
 PathViaValue
     : iri
     {
-      $$ = { type: 'iri', value: $1 };
+      $$ = { type: 'iri', value:{ termType: 'NamedNode', value: $1 }};
     }
     | WhereClause
     {

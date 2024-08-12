@@ -26,6 +26,10 @@ describe('A SPARQL parser', function () {
     testQueries('sparqlstar-spec', { mustError: true });
   });
 
+  describe('Testing the paths keyword', () => {
+    testQueries('paths_keyword', {mustError:false});
+  });
+
   describe('in SPARQL mode with skipValidation', () => {
     testQueries('sparql', { skipValidation: true });
     testQueries('sparqlstar', { skipValidation: true, mustError: true });
@@ -127,6 +131,48 @@ describe('A SPARQL parser', function () {
     expect(error).toBeInstanceOf(Error);
     expect(error.message).toContain("Target id of 'AS' (?X) already used in subquery");
   });
+
+  it('should throw an error because end was left empty', function () {
+    var query = 'PATHS START ?s = <http://example.org/start> END ?e VIA ?v';
+    try { parser.parse(query); }
+    catch (e) { error = e; }
+
+    expect(error).not.toBeUndefined();
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toContain("Expecting 'IRIREF', 'PNAME_NS', 'WHERE', '");
+  });
+
+  it('should throw an error because start was left empty', function () {
+    var query = 'PATHS START ?s  END ?e = <http://example.org/end> VIA <http://example.org/path>';
+    try { parser.parse(query); }
+    catch (e) { error = e; }
+
+    expect(error).not.toBeUndefined();
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toContain("Expecting 'IRIREF', 'PNAME_NS', 'WHERE',");
+  });
+  
+  it('should throw an error because start was not assigned a variable', function () {
+    var query = 'PATHS START = <http://example.org/start> END ?e = <http://example.org/end> VIA ?v';
+    try { parser.parse(query); }
+    catch (e) { error = e; }
+
+    expect(error).not.toBeUndefined();
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toContain("Expecting 'VAR'");
+  });
+
+  it('should throw an error because end was not assigned a variable', function () {
+    var query = 'PATHS START ?s = <http://example.org/start> END = <http://example.org/end> VIA <http://example.org/path>';
+    try { parser.parse(query); }
+    catch (e) { error = e; }
+
+    expect(error).not.toBeUndefined();
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toContain("Expecting 'VAR'");
+  });
+  
+  
 
   it('should preserve BGP and filter pattern order', function () {
     var query = 'SELECT * { ?s ?p "1" . FILTER(true) . ?s ?p "2"  }';
@@ -464,6 +510,10 @@ function testQueries(directory, settings) {
         var parsedQuery = parseJSON(fs.readFileSync(parsedQueryFile, 'utf8'));
 
         const parsed = parser.parse(sparql);
+        if (directory === 'paths_keyword'){
+          console.log('expected', parsedQuery);
+          console.log('the sparql is ', sparql);
+          console.log('parsed', parsed);};
         expect(parsed).toEqualParsedQuery(parsedQuery);
       });
     }

@@ -84,7 +84,7 @@ export interface SelectQuery extends BaseQuery {
 export interface PathsQuery extends BaseQuery {
     queryType: "PATHS";
     start: PathValue;
-    via: PathViaValue;
+    via: PathVia;
     end: PathValue;
     all?: boolean|undefined;
     maxlength?: number| undefined;
@@ -101,13 +101,17 @@ export interface PathValue {
     value?: IriTerm | Pattern[];
 }
 
-export interface PathViaValue {
-    var: {
-        type: Variable,
-        value : string
-    },
-    value?: IriTerm | Pattern[] | null;
-}
+// export interface PathViaValue {
+//     var: {
+//         type: Variable,
+//         value : string
+//     },
+//     value?: IriTerm | Pattern[] | null;
+// }
+
+export type PathVia =  
+| { var: { type: Variable, value: string } } 
+| { value: IriTerm | Pattern[] }; 
 
 export interface Grouping {
     expression: Expression;

@@ -1,0 +1,8 @@
+PREFIX ex: <http://example.org/>
+
+PATHS SHORTEST
+START ?s = ex:Source
+END ?e = ex:Target
+VIA ex:leadsTo
+OFFSET 2
+LIMIT 8
