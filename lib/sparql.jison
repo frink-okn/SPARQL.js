@@ -772,7 +772,7 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' Var '='? PathValue 
+    : 'START' Var '='? PathValue?
     {
         $$ = { property: 'start',
         value: {
@@ -781,7 +781,7 @@ PathProperty
       } 
         };
     }
-    | 'END'  Var '='? PathValue 
+    | 'END'  Var '='? PathValue?
     {
         $$ = { property: 'end',
         value: {
