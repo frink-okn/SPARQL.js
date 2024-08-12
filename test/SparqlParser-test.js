@@ -132,24 +132,24 @@ describe('A SPARQL parser', function () {
     expect(error.message).toContain("Target id of 'AS' (?X) already used in subquery");
   });
 
-  it('should throw an error because end was left empty', function () {
-    var query = 'PATHS START ?s = <http://example.org/start> END ?e VIA ?v';
+  it('should throw an error because end has = missing was left empty', function () {
+    var query = 'PATHS START ?s = <http://example.org/start> END ?e <http://example.org/start> VIA ?v';
     try { parser.parse(query); }
     catch (e) { error = e; }
 
     expect(error).not.toBeUndefined();
     expect(error).toBeInstanceOf(Error);
-    expect(error.message).toContain("Expecting 'IRIREF', 'PNAME_NS', 'WHERE', '");
+    expect(error.message).toContain("'EOF', 'START', 'END', 'VIA', 'MAXLENGTH', 'SHORTEST', 'ALL', 'CYCLIC', '=', 'LIMIT', 'OFFSET', got 'IRIREF'");
   });
 
   it('should throw an error because start was left empty', function () {
-    var query = 'PATHS START ?s  END ?e = <http://example.org/end> VIA <http://example.org/path>';
+    var query = 'PATHS START END ?e = <http://example.org/end> VIA <http://example.org/path>';
     try { parser.parse(query); }
     catch (e) { error = e; }
 
     expect(error).not.toBeUndefined();
     expect(error).toBeInstanceOf(Error);
-    expect(error.message).toContain("Expecting 'IRIREF', 'PNAME_NS', 'WHERE',");
+    expect(error.message).toContain("Expecting 'VAR', got 'END'");
   });
   
   it('should throw an error because start was not assigned a variable', function () {

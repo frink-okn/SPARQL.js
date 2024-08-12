@@ -772,21 +772,21 @@ PathProperties
     ;
 
 PathProperty
-    : 'START' Var '='? PathValue?
+    : 'START' Var PathValue?
     {
         $$ = { property: 'start',
         value: {
           var: { termType: 'Variable', value: $2.value },
-          value: { type: $4.type, value: $4.value } 
+          value: { type: $3.type, value: $3.value } 
       } 
         };
     }
-    | 'END'  Var '='? PathValue?
+    | 'END'  Var PathValue?
     {
         $$ = { property: 'end',
         value: {
           var: { termType: 'Variable', value: $2.value },
-          value: { type: $4.type, value: $4.value } 
+          value: { type: $3.type, value: $3.value } 
       } 
         };
     }
@@ -829,13 +829,13 @@ PathProperty
     }
     ;
 PathValue
-    : iri
+    : '=' iri
     {
-      $$ = { type: 'iri', value:  { termType: 'NamedNode', value: $1 } };
+      $$ = { type: 'iri', value:  { termType: 'NamedNode', value: $2 } };
     }
-    | WhereClause
+    | '=' WhereClause
     {
-      $$ = { type: 'pattern', value: $1.where };
+      $$ = { type: 'pattern', value: $2.where };
     }
  
     ;
