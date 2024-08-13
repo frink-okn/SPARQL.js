@@ -81,18 +81,21 @@ export interface SelectQuery extends BaseQuery {
     offset?: number | undefined;
 }
 
-export interface PathsQuery extends BaseQuery {
+export interface PathsQuery {
+    type : "query";
+    base?: string | undefined;
     queryType: "PATHS";
     start: PathValue;
     via: PathVia;
     end: PathValue;
-    prefixes?: { [prefix: string]: string; };
     shortest: boolean;
     all: boolean;
     cyclic: boolean;    
     maxlength?: number| undefined;
     limit?: number | undefined;
     offset?: number | undefined;
+    where?: Pattern[] | undefined;
+    values?: ValuePatternRow[] | undefined;
     
 }
 export interface PathValue {
