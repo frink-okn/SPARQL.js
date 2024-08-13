@@ -86,6 +86,7 @@ export interface PathsQuery extends BaseQuery {
     start: PathValue;
     via: PathVia;
     end: PathValue;
+    prefixes?: { [prefix: string]: string; };
     shortest: boolean;
     all: boolean;
     cyclic: boolean;    
