@@ -777,7 +777,7 @@ PathProperty
         $$ = { property: 'start',
         value: {
           var: { termType: 'Variable', value: $2.value },
-          value: { type: $3.type, value: $3.value } 
+          value: $3? { type: $3.type, value: $3.value } : undefined
       } 
         };
     }
@@ -786,7 +786,7 @@ PathProperty
         $$ = { property: 'end',
         value: {
           var: { termType: 'Variable', value: $2.value },
-          value: { type: $3.type, value: $3.value } 
+          value: $3 ? { type: $3.type, value: $3.value } : undefined
       } 
         };
     }
