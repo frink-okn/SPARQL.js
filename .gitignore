@@ -2,4 +2,3 @@ node_modules
 *.log
 lib/SparqlParser.js
 .rdf-test-suite-cache
-./main.js
