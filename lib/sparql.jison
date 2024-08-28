@@ -672,7 +672,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 "END"                    return 'END'
 "VIA"                    return 'VIA'
 "ALL"                    return 'ALL'
-"MAXLENGTH"              return 'MAXLENGTH'
+"MAX LENGTH"             return 'MAXLENGTH'
 "SHORTEST"               return 'SHORTEST'
 "CYCLIC"                 return 'CYCLIC'
 
@@ -685,7 +685,7 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 %%
 
 QueryOrUpdate
-    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path | PathsQuery) EOF
+    : Prologue ( Query /* [1] QueryUnit */ | Update? | Path ) EOF
     {
       // Set parser options
       $2 = $2 || {};
@@ -737,123 +737,6 @@ QueryOrUpdate
       return $2;
     }
     ;
-PathsQuery
-    : 'PATHS' PathProperties LimitOffsetClauses?
-    {
-      // Construct the query object for PATHS
-      const pathsQuery = {
-        queryType: 'PATHS',
-        type : 'query',
-        shortest : 'false',
-        all : 'false',
-        cyclic : 'false'
-      };
-      $2.forEach(prop => pathsQuery[prop.property] = prop.value);
-      if ($3)
-      {
-        if ($3.limit) pathsQuery.limit = $3.limit;
-        if ($3.offset) pathsQuery.offset = $3.offset;
-      }
-      $$ = pathsQuery;
-    }
-    ;
-
-
-
-PathProperties
-    : PathProperty PathProperties
-    {
-      $$ = [$1].concat($2);
-    }
-    | PathProperty
-    {
-      $$ = [$1];
-    }
-    ;
-
-PathProperty
-    : 'START' Var PathValue?
-    {
-        $$ = { property: 'start',
-        value: {
-          var: { termType: 'Variable', value: $2.value },
-          value: $3? { type: $3.type, value: $3.value } : undefined
-      } 
-        };
-    }
-    | 'END'  Var PathValue?
-    {
-        $$ = { property: 'end',
-        value: {
-          var: { termType: 'Variable', value: $2.value },
-          value: $3 ? { type: $3.type, value: $3.value } : undefined
-      } 
-        };
-    }
-    | 'VIA' (Var|PathViaValue)
-   {
-      // Check if the second part is a variable or a PathViaValue
-      if ($2.termType) {
-        // This means $2 is a Var
-        $$ = {
-          property: 'via',
-          value: {
-            var: { termType: 'Variable', value: $2.value }
-          }
-        };
-      } else {
-        // This means $2 is a PathViaValue
-        $$ = {
-          property: 'via',
-          value: {
-            value: { type: $2.type, value: $2.value }
-          }
-        };
-      }
-    }
-    | 'MAXLENGTH' '='? INTEGER
-    {
-      $$ = { property: 'MAXLENGTH', value: $3 };
-    }
-    | 'SHORTEST'
-    {
-      $$ = { property: 'shortest', value: true };
-    }
-    | 'ALL'
-    {
-      $$ = { property: 'all', value: true };
-    }
-    | 'CYCLIC'
-    {
-      $$ = { property: 'cyclic', value: true };
-    }
-    ;
-PathValue
-    : '=' iri
-    {
-      $$ = { type: 'iri', value:  { termType: 'NamedNode', value: $2 } };
-    }
-    | '=' WhereClause
-    {
-      $$ = { type: 'pattern', value: $2.where };
-    }
- 
-    ;
-PathViaValue
-    : iri
-    {
-      $$ = { type: 'iri', value:{ termType: 'NamedNode', value: $1 }};
-    }
-    | WhereClause
-    {
-      $$ = { type: 'pattern', value: $1.where };
-    }
-    |
-    {
-      $$ = null;
-    }
-    ;
-
 
 // [2]
 Query
@@ -930,6 +813,34 @@ Qry
     | 'DESCRIBE' ( VarOrIri+ | '*' ) DatasetClause* WhereClause? SolutionModifier -> extend({ queryType: 'DESCRIBE', variables: $2 === '*' ? [new Wildcard()] : $2 }, groupDatasets($3), $4, $5)
     // [12] AskQuery
     | 'ASK' DatasetClause* WhereClause SolutionModifier -> extend({ queryType: 'ASK' }, groupDatasets($2), $3, $4)
+    | 'PATHS' ShortestModifier? 'CYCLIC'? 'START' PathEndpoint 'END' PathEndpoint 'VIA' PathVia MaxLengthModifier? LimitOffsetClauses? -> extend({ queryType: 'PATHS', shortest: ($2 !== undefined ? $2 : true), cyclic: ($3 !== undefined), start: $5, end: $7, via: $9 }, $10, $11)
+    ;
+
+ShortestModifier
+    : 'SHORTEST' -> true
+    | 'ALL' -> false
+    ;
+
+PathEndpoint
+    : Var ( ConstantEndpoint | GraphPatternEndpoint )? -> { variable: $1, input: $2 }
+    ;
+
+ConstantEndpoint
+    : '=' iri -> $2
+    ;
+
+GraphPatternEndpoint
+    : GroupGraphPattern -> $1
+    ;
+
+PathVia
+    : Var
+    | GroupGraphPattern
+    | Path
+    ;
+
+MaxLengthModifier
+    : 'MAXLENGTH' INTEGER -> { maxLength: toInt($2) }
     ;
 
 SelectClauseWildcard

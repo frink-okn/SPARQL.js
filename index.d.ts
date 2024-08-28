@@ -55,7 +55,7 @@ export type QuadTerm = RdfJs.Quad;
 
 export type SparqlQuery = Query | Update;
 
-export type Query = SelectQuery | ConstructQuery | AskQuery | DescribeQuery |PathsQuery;
+export type Query = SelectQuery | ConstructQuery | AskQuery | DescribeQuery | PathsQuery;
 
 export interface BaseQuery {
     type: 'query';

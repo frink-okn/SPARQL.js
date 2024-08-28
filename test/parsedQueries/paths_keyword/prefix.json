@@ -1,52 +1,31 @@
 {
   "queryType": "PATHS",
   "type": "query",
-  "shortest": "false",
-  "all": "false",
-  "cyclic": "false",
+  "shortest": true,
+  "cyclic": false,
   "start": {
-    "var": {
+    "variable": {
       "termType": "Variable",
       "value": "s"
     },
-    "value": {
-      "type": "iri",
-      "value": {
-        "termType": "NamedNode",
-        "value": {
-          "termType": "NamedNode",
-          "value": "http://example.org/PersonA"
-        }
-      }
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/PersonA"
     }
   },
   "end": {
-    "var": {
+    "variable": {
       "termType": "Variable",
       "value": "e"
     },
-    "value": {
-      "type": "iri",
-      "value": {
-        "termType": "NamedNode",
-        "value": {
-          "termType": "NamedNode",
-          "value": "http://example.org/PersonB"
-        }
-      }
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/PersonB"
     }
   },
   "via": {
-    "value": {
-      "type": "iri",
-      "value": {
-        "termType": "NamedNode",
-        "value": {
-          "termType": "NamedNode",
-          "value": "http://example.org/knows"
-        }
-      }
-    }
+    "termType": "NamedNode",
+    "value": "http://example.org/knows"
   },
   "prefixes": {
     "ex": "http://example.org/"

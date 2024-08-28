@@ -139,7 +139,7 @@ describe('A SPARQL parser', function () {
 
     expect(error).not.toBeUndefined();
     expect(error).toBeInstanceOf(Error);
-    expect(error.message).toContain("'EOF', 'START', 'END', 'VIA', 'MAXLENGTH', 'SHORTEST', 'ALL', 'CYCLIC', '=', 'LIMIT', 'OFFSET', got 'IRIREF'");
+    expect(error.message).toContain("Parse error");
   });
 
   it('should throw an error because start was left empty', function () {

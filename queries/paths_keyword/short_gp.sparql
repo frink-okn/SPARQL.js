@@ -1,6 +1,6 @@
 PREFIX ex: <http://example.org/>
 
 PATHS SHORTEST
-START ?s = { ?s ex:hasAge 30 }
-END ?e = { ?e ex:hasAge 40 }
+START ?s { ?s ex:hasAge 30 }
+END ?e { ?e ex:hasAge 40 }
 VIA  ex:knows

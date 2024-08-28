@@ -1,48 +1,33 @@
 {
   "queryType": "PATHS",
   "type": "query",
-  "shortest": "false",
-  "all": true,
-  "cyclic": "false",
+  "shortest": false,
+  "cyclic": false,
   "start": {
-    "var": {
+    "variable": {
       "termType": "Variable",
       "value": "s"
     },
-    "value": {
-      "type": "iri",
-      "value": {
-        "termType": "NamedNode",
-        "value": {
-          "termType": "NamedNode",
-          "value": "http://example.org/Alice"
-        }
-      }
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/Alice"
     }
   },
   "end": {
-    "var": {
+    "variable": {
       "termType": "Variable",
       "value": "e"
     },
-    "value": {
-      "type": "iri",
-      "value": {
-        "termType": "NamedNode",
-        "value": {
-          "termType": "NamedNode",
-          "value": "http://example.org/Bob"
-        }
-      }
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/Bob"
     }
   },
   "via": {
-    "var": {
-      "termType": "Variable",
-      "value": "v"
-    }
+    "termType": "Variable",
+    "value": "v"
   },
-  "MAXLENGTH": "7",
+  "maxLength": 7,
   "prefixes": {
     "ex": "http://example.org/"
   }

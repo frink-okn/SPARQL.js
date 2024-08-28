@@ -1,92 +1,83 @@
 {
-    "queryType": "PATHS",
-    "type": "query",
-    "shortest": true,
-    "all": "false",
-    "cyclic": "false",
-    "start": {
-      "var": {
-        "termType": "Variable",
-        "value": "s"
-      },
-      "value": {
-        "type": "pattern",
-        "value": [
-          {
-            "type": "bgp",
-            "triples": [
-              {
-                "subject": {
-                  "termType": "Variable",
-                  "value": "s"
-                },
-                "predicate": {
-                  "termType": "NamedNode",
-                  "value": "http://example.org/hasAge"
-                },
-                "object": {
-                  "termType": "Literal",
-                  "value": "30",
-                  "language": "",
-                  "datatype": {
-                    "termType": "NamedNode",
-                    "value": "http://www.w3.org/2001/XMLSchema#integer"
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": true,
+  "cyclic": false,
+  "start": {
+    "variable": {
+      "termType": "Variable",
+      "value": "s"
     },
-    "end": {
-      "var": {
-        "termType": "Variable",
-        "value": "e"
-      },
-      "value": {
-        "type": "pattern",
-        "value": [
-          {
-            "type": "bgp",
-            "triples": [
-              {
-                "subject": {
-                  "termType": "Variable",
-                  "value": "e"
-                },
-                "predicate": {
+    "input": {
+      "patterns": [
+        {
+          "triples": [
+            {
+              "object": {
+                "datatype": {
                   "termType": "NamedNode",
-                  "value": "http://example.org/hasAge"
+                  "value": "http://www.w3.org/2001/XMLSchema#integer"
                 },
-                "object": {
-                  "termType": "Literal",
-                  "value": "40",
-                  "language": "",
-                  "datatype": {
-                    "termType": "NamedNode",
-                    "value": "http://www.w3.org/2001/XMLSchema#integer"
-                  }
-                }
+                "language": "",
+                "termType": "Literal",
+                "value": "30"
+              },
+              "predicate": {
+                "termType": "NamedNode",
+                "value": "http://example.org/hasAge"
+              },
+              "subject": {
+                "termType": "Variable",
+                "value": "s"
               }
-            ]
-          }
-        ]
-      }
-    },
-    "via": {
-      "value": {
-        "type": "iri",
-        "value": {
-          "termType": "NamedNode",
-          "value": {
-            "termType": "NamedNode",
-            "value": "http://example.org/knows"
-          }
+            }
+          ],
+          "type": "bgp"
         }
-      }
-    },
-    "prefixes": {
-      "ex": "http://example.org/"
+      ],
+      "type": "group"
     }
+  },
+  "end": {
+    "variable": {
+      "termType": "Variable",
+      "value": "e"
+    },
+    "input": {
+      "patterns": [
+        {
+          "triples": [
+            {
+              "object": {
+                "datatype": {
+                  "termType": "NamedNode",
+                  "value": "http://www.w3.org/2001/XMLSchema#integer"
+                },
+                "language": "",
+                "termType": "Literal",
+                "value": "40"
+              },
+              "predicate": {
+                "termType": "NamedNode",
+                "value": "http://example.org/hasAge"
+              },
+              "subject": {
+                "termType": "Variable",
+                "value": "e"
+              }
+            }
+          ],
+          "type": "bgp"
+        }
+      ],
+      "type": "group"
+    }
+  },
+  "via": {
+    "termType": "NamedNode",
+    "value": "http://example.org/knows"
+  },
+  "prefixes": {
+    "ex": "http://example.org/"
   }
+}
