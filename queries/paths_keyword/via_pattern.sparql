@@ -1,0 +1,1 @@
+PATHS START ?s = <http://example.org/start> End ?e = <http://example.org/end> VIA { ?s <http://example.org/via> ?e }

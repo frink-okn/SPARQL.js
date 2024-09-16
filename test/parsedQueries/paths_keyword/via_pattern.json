@@ -1,0 +1,54 @@
+{
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": true,
+  "cyclic": false,
+  "start": {
+    "variable": {
+      "termType": "Variable",
+      "value": "s"
+    },
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/start"
+    }
+  },
+  "end": {
+    "variable": {
+      "termType": "Variable",
+      "value": "e"
+    },
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/end"
+    }
+  },
+  "via": {
+    "type": "Pattern",
+    "value": {
+      "type": "group",
+      "patterns": [
+        {
+          "triples": [
+            {
+              "object": {
+                "termType": "Variable",
+                "value": "e"
+              },
+              "predicate": {
+                "termType": "NamedNode",
+                "value": "http://example.org/via"
+              },
+              "subject": {
+                "termType": "Variable",
+                "value": "s"
+              }
+            }
+          ],
+          "type": "bgp"
+        }
+      ]
+    }
+  },
+  "prefixes": {}
+}

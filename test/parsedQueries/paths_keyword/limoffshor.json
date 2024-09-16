@@ -1,35 +1,38 @@
 {
-    "queryType": "PATHS",
-    "type": "query",
-    "shortest": true,
-    "cyclic": false,
-    "start": {
-      "variable": {
-        "termType": "Variable",
-        "value": "s"
-      },
-      "input": {
-        "termType": "NamedNode",
-        "value": "http://example.org/Source"
-      }
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": true,
+  "cyclic": false,
+  "start": {
+    "variable": {
+      "termType": "Variable",
+      "value": "s"
     },
-    "end": {
-      "variable": {
-        "termType": "Variable",
-        "value": "e"
-      },
-      "input": {
-        "termType": "NamedNode",
-        "value": "http://example.org/Target"
-      }
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/Source"
+    }
+  },
+  "end": {
+    "variable": {
+      "termType": "Variable",
+      "value": "e"
     },
-    "via": {
+    "input": {
+      "termType": "NamedNode",
+      "value": "http://example.org/Target"
+    }
+  },
+  "via": {
+    "type": "Path",
+    "value": {
       "termType": "NamedNode",
       "value": "http://example.org/leadsTo"
-    },
-    "limit": 8,
-    "offset": 2,
-    "prefixes": {
-      "ex": "http://example.org/"
     }
+  },
+  "limit": 8,
+  "offset": 2,
+  "prefixes": {
+    "ex": "http://example.org/"
   }
+}

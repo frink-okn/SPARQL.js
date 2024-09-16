@@ -834,9 +834,9 @@ GraphPatternEndpoint
     ;
 
 PathVia
-    : Var
-    | GroupGraphPattern
-    | Path
+    : Var -> { type: 'Variable', value: $1 }
+    | GroupGraphPattern -> { type: 'Pattern', value: { type: 'group', patterns: $1.patterns }}
+    | Path -> { type: 'Path', value: $1 }
     ;
 
 MaxLengthModifier

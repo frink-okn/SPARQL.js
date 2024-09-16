@@ -24,8 +24,11 @@
     }
   },
   "via": {
-    "termType": "Variable",
-    "value": "v"
+    "type": "Variable",
+    "value": {
+      "termType": "Variable",
+      "value": "v"
+    }
   },
   "maxLength": 7,
   "prefixes": {

@@ -24,8 +24,11 @@
     }
   },
   "via": {
-    "termType": "NamedNode",
-    "value": "http://example.org/via"
+    "type": "Path",
+    "value": {
+      "termType": "NamedNode",
+      "value": "http://example.org/via"
+    }
   },
   "prefixes": {}
 }

@@ -24,8 +24,11 @@
     }
   },
   "via": {
-    "termType": "NamedNode",
-    "value": "http://example.org/knows"
+    "type": "Path",
+    "value": {
+      "termType": "NamedNode",
+      "value": "http://example.org/knows"
+    }
   },
   "prefixes": {
     "ex": "http://example.org/"

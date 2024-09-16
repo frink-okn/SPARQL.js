@@ -18,11 +18,13 @@
     "url": "https://github.com/RubenVerborgh/SPARQL.js/issues"
   },
   "main": "sparql.js",
+  "types": "index.d.ts",
   "bin": {
     "sparqljs": "bin/sparql-to-json"
   },
   "files": [
     "sparql.js",
+    "index.d.ts",
     "lib/*.js",
     "bin/*"
   ],
