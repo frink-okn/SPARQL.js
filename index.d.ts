@@ -120,7 +120,7 @@ export interface PathsQuery extends BaseQuery {
 
 export interface PathEndpoint {
     variable: VariableTerm;
-    input?: IriTerm | Pattern[];
+    input?: { type: 'NamedNode', value: IriTerm } | { type: 'Pattern', value: GroupPattern };
 }
 
 export type PathVia = 

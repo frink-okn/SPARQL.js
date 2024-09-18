@@ -826,11 +826,11 @@ PathEndpoint
     ;
 
 ConstantEndpoint
-    : '=' iri -> $2
+    : '=' iri -> { type: 'NamedNode', value: $2 }
     ;
 
 GraphPatternEndpoint
-    : GroupGraphPattern -> $1
+    : GroupGraphPattern -> { type: 'Pattern', value: { type: 'group', patterns: $1.patterns }}
     ;
 
 PathVia

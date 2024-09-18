@@ -9,33 +9,36 @@
       "value": "s"
     },
     "input": {
-      "patterns": [
-        {
-          "triples": [
-            {
-              "object": {
-                "datatype": {
-                  "termType": "NamedNode",
-                  "value": "http://www.w3.org/2001/XMLSchema#integer"
+      "type": "Pattern",
+      "value": {
+        "patterns": [
+          {
+            "triples": [
+              {
+                "object": {
+                  "datatype": {
+                    "termType": "NamedNode",
+                    "value": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "language": "",
+                  "termType": "Literal",
+                  "value": "30"
                 },
-                "language": "",
-                "termType": "Literal",
-                "value": "30"
-              },
-              "predicate": {
-                "termType": "NamedNode",
-                "value": "http://example.org/hasAge"
-              },
-              "subject": {
-                "termType": "Variable",
-                "value": "s"
+                "predicate": {
+                  "termType": "NamedNode",
+                  "value": "http://example.org/hasAge"
+                },
+                "subject": {
+                  "termType": "Variable",
+                  "value": "s"
+                }
               }
-            }
-          ],
-          "type": "bgp"
-        }
-      ],
-      "type": "group"
+            ],
+            "type": "bgp"
+          }
+        ],
+        "type": "group"
+      }
     }
   },
   "end": {
@@ -44,33 +47,36 @@
       "value": "e"
     },
     "input": {
-      "patterns": [
-        {
-          "triples": [
-            {
-              "object": {
-                "datatype": {
-                  "termType": "NamedNode",
-                  "value": "http://www.w3.org/2001/XMLSchema#integer"
+      "type": "Pattern",
+      "value": {
+        "patterns": [
+          {
+            "triples": [
+              {
+                "object": {
+                  "datatype": {
+                    "termType": "NamedNode",
+                    "value": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "language": "",
+                  "termType": "Literal",
+                  "value": "40"
                 },
-                "language": "",
-                "termType": "Literal",
-                "value": "40"
-              },
-              "predicate": {
-                "termType": "NamedNode",
-                "value": "http://example.org/hasAge"
-              },
-              "subject": {
-                "termType": "Variable",
-                "value": "e"
+                "predicate": {
+                  "termType": "NamedNode",
+                  "value": "http://example.org/hasAge"
+                },
+                "subject": {
+                  "termType": "Variable",
+                  "value": "e"
+                }
               }
-            }
-          ],
-          "type": "bgp"
-        }
-      ],
-      "type": "group"
+            ],
+            "type": "bgp"
+          }
+        ],
+        "type": "group"
+      }
     }
   },
   "via": {

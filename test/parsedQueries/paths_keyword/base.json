@@ -9,8 +9,11 @@
       "value": "s"
     },
     "input": {
-      "termType": "NamedNode",
-      "value": "http://example.org/start"
+      "type": "NamedNode",
+      "value": {
+        "termType": "NamedNode",
+        "value": "http://example.org/start"
+      }
     }
   },
   "end": {
@@ -19,8 +22,11 @@
       "value": "e"
     },
     "input": {
-      "termType": "NamedNode",
-      "value": "http://example.org/end"
+      "type": "NamedNode",
+      "value": {
+        "termType": "NamedNode",
+        "value": "http://example.org/end"
+      }
     }
   },
   "via": {
