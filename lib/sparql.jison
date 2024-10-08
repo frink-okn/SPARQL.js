@@ -462,6 +462,7 @@
     }
     return operations;
   }
+  module.exports = parser;
 %}
 
 %lex
@@ -666,6 +667,14 @@ SPACES_COMMENTS       (\s+|{COMMENT}\n\r?)+
 {ANON}                   return 'ANON'
 <<EOF>>                  return 'EOF'
 .                        return 'INVALID'
+"PATHS"                  return 'PATHS'
+"START"                  return 'START'
+"END"                    return 'END'
+"VIA"                    return 'VIA'
+"ALL"                    return 'ALL'
+"MAX LENGTH"             return 'MAXLENGTH'
+"SHORTEST"               return 'SHORTEST'
+"CYCLIC"                 return 'CYCLIC'
 
 /lex
 
@@ -804,6 +813,34 @@ Qry
     | 'DESCRIBE' ( VarOrIri+ | '*' ) DatasetClause* WhereClause? SolutionModifier -> extend({ queryType: 'DESCRIBE', variables: $2 === '*' ? [new Wildcard()] : $2 }, groupDatasets($3), $4, $5)
     // [12] AskQuery
     | 'ASK' DatasetClause* WhereClause SolutionModifier -> extend({ queryType: 'ASK' }, groupDatasets($2), $3, $4)
+    | 'PATHS' ShortestModifier? 'CYCLIC'? 'START' PathEndpoint 'END' PathEndpoint 'VIA' PathVia MaxLengthModifier? LimitOffsetClauses? -> extend({ queryType: 'PATHS', shortest: ($2 !== undefined ? $2 : true), cyclic: ($3 !== undefined), start: $5, end: $7, via: $9 }, $10, $11)
+    ;
+
+ShortestModifier
+    : 'SHORTEST' -> true
+    | 'ALL' -> false
+    ;
+
+PathEndpoint
+    : Var ( ConstantEndpoint | GraphPatternEndpoint )? -> { variable: $1, input: $2 }
+    ;
+
+ConstantEndpoint
+    : '=' iri -> { type: 'NamedNode', value: $2 }
+    ;
+
+GraphPatternEndpoint
+    : GroupGraphPattern -> { type: 'Pattern', value: { type: 'group', patterns: $1.patterns }}
+    ;
+
+PathVia
+    : Var -> { type: 'Variable', value: $1 }
+    | GroupGraphPattern -> { type: 'Pattern', value: { type: 'group', patterns: $1.patterns }}
+    | Path -> { type: 'Path', value: $1 }
+    ;
+
+MaxLengthModifier
+    : 'MAXLENGTH' INTEGER -> { maxLength: toInt($2) }
     ;
 
 SelectClauseWildcard

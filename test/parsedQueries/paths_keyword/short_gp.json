@@ -1,0 +1,92 @@
+{
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": true,
+  "cyclic": false,
+  "start": {
+    "variable": {
+      "termType": "Variable",
+      "value": "s"
+    },
+    "input": {
+      "type": "Pattern",
+      "value": {
+        "patterns": [
+          {
+            "triples": [
+              {
+                "object": {
+                  "datatype": {
+                    "termType": "NamedNode",
+                    "value": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "language": "",
+                  "termType": "Literal",
+                  "value": "30"
+                },
+                "predicate": {
+                  "termType": "NamedNode",
+                  "value": "http://example.org/hasAge"
+                },
+                "subject": {
+                  "termType": "Variable",
+                  "value": "s"
+                }
+              }
+            ],
+            "type": "bgp"
+          }
+        ],
+        "type": "group"
+      }
+    }
+  },
+  "end": {
+    "variable": {
+      "termType": "Variable",
+      "value": "e"
+    },
+    "input": {
+      "type": "Pattern",
+      "value": {
+        "patterns": [
+          {
+            "triples": [
+              {
+                "object": {
+                  "datatype": {
+                    "termType": "NamedNode",
+                    "value": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "language": "",
+                  "termType": "Literal",
+                  "value": "40"
+                },
+                "predicate": {
+                  "termType": "NamedNode",
+                  "value": "http://example.org/hasAge"
+                },
+                "subject": {
+                  "termType": "Variable",
+                  "value": "e"
+                }
+              }
+            ],
+            "type": "bgp"
+          }
+        ],
+        "type": "group"
+      }
+    }
+  },
+  "via": {
+    "type": "Path",
+    "value": {
+      "termType": "NamedNode",
+      "value": "http://example.org/knows"
+    }
+  },
+  "prefixes": {
+    "ex": "http://example.org/"
+  }
+}

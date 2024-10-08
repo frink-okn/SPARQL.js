@@ -1,0 +1,6 @@
+PREFIX ex: <http://example.org/>
+
+PATHS 
+START ?s = ex:PersonA
+END ?e = ex:PersonB
+VIA  ex:knows

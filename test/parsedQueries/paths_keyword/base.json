@@ -1,0 +1,40 @@
+{
+  "queryType": "PATHS",
+  "type": "query",
+  "shortest": true,
+  "cyclic": false,
+  "start": {
+    "variable": {
+      "termType": "Variable",
+      "value": "s"
+    },
+    "input": {
+      "type": "NamedNode",
+      "value": {
+        "termType": "NamedNode",
+        "value": "http://example.org/start"
+      }
+    }
+  },
+  "end": {
+    "variable": {
+      "termType": "Variable",
+      "value": "e"
+    },
+    "input": {
+      "type": "NamedNode",
+      "value": {
+        "termType": "NamedNode",
+        "value": "http://example.org/end"
+      }
+    }
+  },
+  "via": {
+    "type": "Path",
+    "value": {
+      "termType": "NamedNode",
+      "value": "http://example.org/via"
+    }
+  },
+  "prefixes": {}
+}
